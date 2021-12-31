@@ -46,4 +46,20 @@ function render(element, container) {
   container.appendChild(dom);
 }
 
+let nextUnitOfWork = null;
+
+function workLoop(deadLine) {
+  let shouldYield = false;
+  while (nextUnitOfWork && !shouldYield) {
+    nextUnitOfWork = performNextUnitOfWork(nextUnitOfWork);
+    shouldYield = deadLine.timeRemaining() < 1;
+  }
+  requestIdleCallback(workLoop);
+}
+requestIdleCallback(workLoop);
+
+function performNextUnitOfWork() {
+  // todo
+}
+
 export default { createElement, render };
