@@ -33,9 +33,7 @@ function render(element, container) {
   }
 
   const allProps = Object.keys(element.props);
-  console.log(allProps);
   allProps.filter(isProperty).forEach((prop) => {
-    console.log("hi");
     dom[prop] = element.props[prop];
   });
 
@@ -51,14 +49,14 @@ let nextUnitOfWork = null;
 function workLoop(deadLine) {
   let shouldYield = false;
   while (nextUnitOfWork && !shouldYield) {
-    nextUnitOfWork = performNextUnitOfWork(nextUnitOfWork);
+    nextUnitOfWork = performUnitOfWork(nextUnitOfWork);
     shouldYield = deadLine.timeRemaining() < 1;
   }
   requestIdleCallback(workLoop);
 }
 requestIdleCallback(workLoop);
 
-function performNextUnitOfWork() {
+function performUnitOfWork() {
   // todo
 }
 
